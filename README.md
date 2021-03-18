@@ -6,10 +6,10 @@ This project was created using Node.js, Express, MongoDB, Passport and Bootstrap
 Passport was used to handle authentication.
 
 # Features
-Users can create and remove campgrounds
+* Users can create and remove campgrounds
 
-Users can review campgrounds and remove their review
+* Users can review campgrounds and remove their review
 
-User profiles include information of the user (name, email)
+* User profiles include information of the user (name, email)
 
-Added authentication and authorization
+* Added authentication and authorization
