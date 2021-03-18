@@ -1,0 +1,106 @@
+<%- layout("layouts/ejs-boilerplate.ejs") %> 
+<link rel="stylesheet" href="/css/star-growRotate.css">
+    
+    <div class="d-flex flex-row bd-highlight mb-3">
+        <div class="p-2 bd-highlight" style="width: 40rem; max-width: 40rem;">
+            <img src="<%= foundCampground.image %> " class="img-fluid img-thumbnail">
+        </div>
+
+        <div class="p-2 bd-highlight col-5">
+            <div class="d-flex flex-column bd-highlight mb-3 card">
+                <div class="p-2 bd-highlight card-header">
+                    <h1 class="text-center"><%= foundCampground.name %> </h1>
+                    <div class="text-end">
+                        - Submitted by <b><%= foundCampground.owner.username %></b>
+                    </div>
+                </div>
+                
+                <div class="p-2 bd-highlight pb-0">
+                    <ul>
+                        <li><b>&#8377;</b> <%= foundCampground.price %>/day </li>
+                        <li><%= foundCampground.location %> </li>
+                        <li><%= foundCampground.description %> </li>
+                    </ul>
+                    
+                </div>
+
+                <% if(currentUserInfo && foundCampground.owner.equals(currentUserInfo._id)){ %> 
+                    <div class="p-2 bd-highlight mx-auto pt-0">
+                        <form action="/campgrounds/<%= foundCampground._id %>?_method=DELETE" method="POST">
+                            <button class="btn btn-danger">Delete campground</button>
+                        </form>
+                    </div>
+                <% } %> 
+            </div>
+            
+            <% if(currentUserInfo){ %> 
+                <div class="card p-3">
+                    <h5>Leave your Review</h5>
+                    <form action="/campgrounds/<%= foundCampground._id %>" method="POST" class="validation-by-ekansh" novalidate>
+                        <!-- FOR RANGE INPUT
+                            <div class="mb-3">
+                            <label for="rating" class="form-label">Rating: <output id="amount">3</output></label>
+                            <input type="range" class="form-range" id="rating" name="rating" min="1" max="5" value="3" oninput="amount.value=rating.value">
+
+                        </div> -->
+
+                        <fieldset class="starability-growRotate">
+                            <input type="radio" id="no-rate" class="input-no-rate" name="rating" value="5" checked aria-label="No rating." />
+                      
+                            <input type="radio" id="rate1" name="rating" value="1" />
+                            <label for="rate1">1 star.</label>
+                      
+                            <input type="radio" id="rate2" name="rating" value="2" />
+                            <label for="rate2">2 stars.</label>
+                      
+                            <input type="radio" id="rate3" name="rating" value="3" />
+                            <label for="rate3">3 stars.</label>
+                      
+                            <input type="radio" id="rate4" name="rating" value="4" />
+                            <label for="rate4">4 stars.</label>
+                      
+                            <input type="radio" id="rate5" name="rating" value="5" />
+                            <label for="rate5">5 stars.</label>
+                      
+                            <span class="starability-focus-ring"></span>
+                        </fieldset>
+
+                        <div class="mb-3">
+                            <label for="text" class="form-label">Review:</label>
+                            <textarea class="form-control" id="text" rows="3" name="text" required></textarea>
+                        </div>                                               
+                        <button class="btn btn-sm btn-success">Add review</button>
+                    </form>
+                </div>
+            <% } %> 
+
+        </div>
+        
+    </div>
+
+    <% if(foundCampground.reviewsArray.length){ %> 
+        <hr class="m-0">
+        <hr class="m-0">
+
+        <div class="container p-2">
+            <h3 class="text-center">Reviews Section</h3>
+            <div class="row justify-content-center">
+                <% for(let review of foundCampground.reviewsArray){ %>
+                    <div class="card p-3 m-3 col-4">
+                        <h4 ><%= review.owner.username %> </h4>
+                        <p class="starability-result" data-rating=<%= review.rating %> >
+                            Rated: <%= review.rating %> stars
+                        </p>
+                        <p><%= review.text %> </p>
+
+                        <% if(currentUserInfo && review.owner.equals(currentUserInfo._id)){ %> 
+                            <form action="/campgrounds/<%= foundCampground._id %>/<%= review._id %>?_method=DELETE" method="POST">
+                                <button class="btn btn-sm btn-danger">Delete Review</button>
+                            </form>
+                        <% } %> 
+
+                    </div>    
+                <% } %> 
+            </div>
+        </div>
+    <% } %> 

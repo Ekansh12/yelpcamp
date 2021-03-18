@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%;">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Campgrounds</title>
+        <!-- Using bootstrap v5 -->
+        <link rel="stylesheet" href="/css/0bootstrap.css">
+
+    </head>
+
+    <body style="min-height: 100%;">
+        <%- include("./navbar.ejs") %>
+
+        <main class="container mt-5 pt-5"> 
+            <%- include("./flash.ejs") %> 
+            <%- body %>
+        </main>
+        
+        <%- include("./footer.ejs") %> 
+        <script src="/js/0jquery.js"></script>
+        <script src="/js/0bootstrap.js"></script>
+        <script src="/js/formValidation.js"></script>
+        <script src="/js/flash.js"></script>
+    </body>
+</html>

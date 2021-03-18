@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YelpCamp</title>
+    <!-- Using bootstrap v5 -->
+    <link rel="stylesheet" href="/css/0bootstrap.css">
+    <link rel="stylesheet" href="/css/home.css">
+</head>
+<body class="text-white d-flex flex-column">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg">
+            <span class="navbar-brand fw-bold">YelpCamp</span>
+            <ul class="nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                </li>
+                
+                <% if(currentUserInfo){ %> 
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                <% }else{ %> 
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/signUp">Sign Up</a>
+                    </li>
+                <% } %> 
+            </ul>
+        </nav>
+    </div>
+
+    <div class="container d-flex h-100 flex-column align-items-center justify-content-center text-center">
+        <h2>Welcome to YelpCamp</h2>
+        <p class="text-white-50">Jump right in and explore our many campgrounds. <br>
+        Feel free to share some of your own and comment on others!</p>
+        <a href="/campgrounds" class="btn btn-lg btn-light">Campgrounds</a>
+    </div>
+    
+    <script src="/js/0jquery.js"></script>
+    <script src="/js/0bootstrap.js"></script>
+</body>
+</html>
