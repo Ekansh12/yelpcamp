@@ -25,13 +25,17 @@ const campgroundSchema= new mongoose.Schema({
         min:0
     },
     image:{
-        type:String
+        type:String,
+        required: true
     },
-    description:{
-        type:String
-    },
+    description: String,
     location:{
-        type:String
+        type:String,
+        required: true
+    },
+    createdAt: { 
+        type: Date,
+        default: Date.now 
     },
     reviewsArray:[{
         type: mongoose.Schema.Types.ObjectId,
@@ -40,7 +44,8 @@ const campgroundSchema= new mongoose.Schema({
     owner:{
         type: mongoose.Schema.Types.ObjectId,
         ref: "user"
-    }
+    },
+    ratingSum: Number
 })
 
 const campground=mongoose.model("campground",campgroundSchema);

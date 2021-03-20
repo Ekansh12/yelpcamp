@@ -1,17 +1,47 @@
-<%- layout("layouts/ejs-boilerplate.ejs") %>
-<h1 class="text-center">All Campgrounds</h1>
+<%- layout("layouts/boilerplate.ejs") %>
+<link rel="stylesheet" href="/css/star-growRotate.css">
 
-<div class="row justify-content-center">
-    <% for(let c of campgrounds){ %>
-    <div class="card m-2 px-0" style="width: 18rem; background: #ADA996;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    ">
-        <img src="<%= c.image %>" class="card-img-top" alt="">
-        <div class="card-body">
-            <h5 class="card-title"><%= c.name %> </h5>
-            <a href="/campgrounds/<%= c._id %> " class="btn btn-primary">Details</a>
-        </div>
-    </div>
-    <% } %>
+<div id="img-div" class="d-none d-md-block text-center text-white p-5">
+    <p id="big-display" class="pt-5 mb-0">Welcome to YelpCamp!</p>
+    <p class="fs-5 mt-0">View campgrounds from all over the world</p>
 </div>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <% for(let c of campgrounds){ %>
+        <div id="gradient-bg" class="card m-3 px-0 shadow col-sm-10 col-md-5 col-lg-3 ">
+            <img src="<%= c.image %>" class="card-img-top" alt="">
+            <div class="card-body pe-2  ">
+                <div class="card-title text-capitalize">
+                    <a id="underlineRemove" class="fs-5" href="/campgrounds/<%= c._id %>" ><%= c.name %></a>
+                </div>
+                <div class="card-text">
+                    <div class="text-muted">
+                        <% if(c.reviewsArray.length>0){ %> 
+                            <% const stars= Math.round(c.ratingSum/c.reviewsArray.length) %> 
+                            <% for(let i=1;i<=5;i++){ %>
+                                    <% if(i>stars){ %>
+                                        <span class="fa fa-star"></span> 
+                                    <% }else{ %>    
+                                        <span class="fa fa-star text-warning"></span> %> 
+                                    <% } %>
+                            <% } %> 
+                        <% } %> 
+                        <span class="ms-2">
+                            <% if(c.reviewsArray.length==0){ %>
+                                No reviews
+                            <% }else if(c.reviewsArray.length==1){ %>
+                                1 review
+                            <% }else{ %>
+                                <%= c.reviewsArray.length %> reviews  
+                            <% } %>  
+                        </span>
+                    </div>
+                    <div class="text-end">&#8377; <%= c.price %>/night</div>
+                </div>
+            </div>
+        </div>
+        <% } %>
+    </div>
+</div>
+

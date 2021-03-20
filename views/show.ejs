@@ -1,10 +1,72 @@
-<%- layout("layouts/ejs-boilerplate.ejs") %> 
+<%- layout("layouts/boilerplate.ejs") %> 
 <link rel="stylesheet" href="/css/star-growRotate.css">
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
     
-    <div class="d-flex flex-row bd-highlight mb-3">
+    <div class="d-flex flex-row bd-highlight mb-3 mt-5">
         <div class="p-2 bd-highlight" style="width: 40rem; max-width: 40rem;">
             <img src="<%= foundCampground.image %> " class="img-fluid img-thumbnail">
         </div>
+
+        <div id='map' style='width: 400px; height: 300px;'>
+            <script src="https://unpkg.com/es6-promise@4.2.4/dist/es6-promise.auto.min.js"></script>
+            <script src="https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.min.js"></script>
+            <div class="mapboxgl-control-container">
+                <div class="mapboxgl-ctrl-top-left">
+                    <div class="mapboxgl-ctrl mapboxgl-ctrl-group">
+                        <input class="input" id="streets-v11" type="radio" name="rtoggle" value="streets" checked="checked">
+                        <label for="streets-v11">streets</label>
+                        <input class="input" id="dark-v10" type="radio" name="rtoggle" value="dark">
+                        <label for="dark-v10">dark</label>
+                        <input class="input" id="satellite-v9" type="radio" name="rtoggle" value="satellite">
+                        <label for="satellite-v9">satellite</label>
+                        <button class="button">center</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <script>
+            mapboxgl.accessToken = 'pk.eyJ1IjoiZWthbnNoMjQiLCJhIjoiY2ttZ21uMTY2MzFobzJ2bGFjYWFqcGx6NiJ9.RYkq5Y8YGhcnrYlUS6ABpw';
+            var mapboxClient = mapboxSdk({ accessToken: mapboxgl.accessToken });
+            mapboxClient.geocoding
+            .forwardGeocode({
+                query: '<%= foundCampground.location %> ',
+                autocomplete: false,
+                limit: 1
+            })
+            .send()
+            .then(function (response) {
+                if (response && response.body && response.body.features && response.body.features.length){
+                    var feature = response.body.features[0];
+                    var map = new mapboxgl.Map({
+                        container: 'map',
+                        style: 'mapbox://styles/mapbox/streets-v11',
+                        center: feature.center,
+                        zoom: 12
+                    });
+                    
+                    var layerList = document.getElementById('map');
+                    var inputs = layerList.getElementsByClassName('input');
+                    const button=layerList.getElementsByClassName("button");
+                    
+                    function switchLayer(layer) {
+                        var layerId = layer.target.id;
+                        map.setStyle('mapbox://styles/mapbox/' + layerId);
+                    }
+
+
+                    button[0].onclick = ()=> map.flyTo({ center: feature.center });;
+                    
+                    for (var i = 0; i < inputs.length; i++) {
+                        inputs[i].onclick = switchLayer;
+                    }
+                    new mapboxgl.Marker().setLngLat(feature.center).addTo(map);
+                    map.addControl(new mapboxgl.NavigationControl());
+                }
+            });
+        </script>
 
         <div class="p-2 bd-highlight col-5">
             <div class="d-flex flex-column bd-highlight mb-3 card">
@@ -17,7 +79,7 @@
                 
                 <div class="p-2 bd-highlight pb-0">
                     <ul>
-                        <li><b>&#8377;</b> <%= foundCampground.price %>/day </li>
+                        <li><b>&#8377;</b> <%= foundCampground.price %>/night </li>
                         <li><%= foundCampground.location %> </li>
                         <li><%= foundCampground.description %> </li>
                     </ul>
@@ -25,7 +87,7 @@
                 </div>
 
                 <% if(currentUserInfo && foundCampground.owner.equals(currentUserInfo._id)){ %> 
-                    <div class="p-2 bd-highlight mx-auto pt-0">
+                    <div class="p-2 bd-highlight ps-4 pt-0">
                         <form action="/campgrounds/<%= foundCampground._id %>?_method=DELETE" method="POST">
                             <button class="btn btn-danger">Delete campground</button>
                         </form>
@@ -61,7 +123,7 @@
                       
                             <input type="radio" id="rate5" name="rating" value="5" />
                             <label for="rate5">5 stars.</label>
-                      
+                
                             <span class="starability-focus-ring"></span>
                         </fieldset>
 

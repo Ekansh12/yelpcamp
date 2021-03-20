@@ -12,25 +12,29 @@ const userRouter= require("./views/router/userRouter.js");
 const user= require("./model/user.js");
 const passport=require("passport");
 const LocalStrategy= require("passport-local");
+const helmet=require("helmet");
 
 app.set("views",path.join(__dirname,"views"));
 app.use(express.static(path.join(__dirname,"/public")));
 app.engine("ejs",ejsMate);
-app.use(methodOverride("_method"));
 app.use(bodyparser.urlencoded({extended:true}));
+app.use(methodOverride("_method"));
 
 app.use(session({
+    name: "_uazx",
     secret: "howTheHellIKnow",
     resave: false,
     saveUninitialized: true,
     cookie:{
         httpOnly:true,
+        // secure: true,
         expires: Date.now() + 3*24*60*60*1000,
         maxAge: 3*24*60*60*1000
     }
 }));
 
 app.use(flash());
+app.use(helmet({ contentSecurityPolicy: false }));
 
 app.use(passport.initialize());
 app.use(passport.session());

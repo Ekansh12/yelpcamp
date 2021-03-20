@@ -1,9 +1,9 @@
 const mongoose=require("mongoose");
-const campground=require("../model/schema.js");
-const user=require("../model/user.js");
-const review=require("../model/review.js");
-const { firstName,lastName }=require("./names.js");
-const cities=require("./cities.js");
+const campground=require("./model/campground.js");
+const user=require("./model/user.js");
+const review=require("./model/review.js");
+const { firstName,lastName }=require("./data/names.js");
+const cities=require("./data/cities.js");
 
 const imgs=["https://images.unsplash.com/photo-1532339142463-fd0a8979791a?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
             "https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
@@ -50,7 +50,8 @@ const Seeding = async ()=>{
             location: `${cities[num].city}, ${cities[num].state}`,
             image: imgs[i],
             description: "Explore our campground and if you already visited then rate our campground",
-            owner: user1._id
+            owner: user1._id,
+            ratingSum: 0
         }
         campSeed.push(obj);
     }

@@ -6,13 +6,16 @@
         <title>Campgrounds</title>
         <!-- Using bootstrap v5 -->
         <link rel="stylesheet" href="/css/0bootstrap.css">
-
+        <link rel="stylesheet" href="/css/common.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+        crossorigin="anonymous">
+        
     </head>
 
-    <body style="min-height: 100%;">
+    <body>
         <%- include("./navbar.ejs") %>
 
-        <main class="container mt-5 pt-5"> 
+        <main> 
             <%- include("./flash.ejs") %> 
             <%- body %>
         </main>

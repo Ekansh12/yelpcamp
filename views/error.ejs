@@ -1,15 +1,11 @@
-<%- layout("layouts/ejs-boilerplate.ejs") %>
+<%- layout("layouts/boilerplate.ejs") %>
 
-<div class="alert alert-danger mt-5 " role="alert">
-    <h4 class="alert-heading"><%= message %> </h4>
-    <p>
-        <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"aria-controls="collapseExample">
-            View stack trace
-        </a>
-    </p>
-    <div class="collapse" id="collapseExample">
-        <div class="card card-body">
-            <%= err.stack %>
-        </div>
+<div class="container text-center ">
+    <div id="big-display" class="m-5">
+        <%= message %>
+    </div>
+    <div class="m-5">
+        <a class="btn btn-dark btn-lg m-3" href="/" >Go Home</a>
+        <a class="btn btn-dark btn-lg m-3" href="/campgrounds" >Go to Campgrounds Page</a>
     </div>
 </div>

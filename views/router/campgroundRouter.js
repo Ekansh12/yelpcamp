@@ -1,6 +1,6 @@
 const express=require("express");
 const router=express.Router({mergeParams: true});
-const campground=require("../../model/schema.js");
+const campground=require("../../model/campground.js");
 const review=require("../../model/review.js");
 const asyncWrapper=require("../../errorHandler/asyncWrapper.js");
 
@@ -57,7 +57,6 @@ router.get("/:id", asyncWrapper(async (req, res, next)=>{
         req.flash("error","Campground not found");
         res.redirect("/campgrounds");
     }
-    console.log(foundCampground);
     res.render("show.ejs",{foundCampground});
 }))
 
@@ -68,6 +67,7 @@ router.post("/:id", isLoggedIn, asyncWrapper(async (req, res, next)=>{
     newReview.owner=req.user._id;
     const foundCampground=await campground.findById(id);
     foundCampground.reviewsArray.push(newReview);
+    foundCampground.ratingSum+= parseInt(rating);
     await newReview.save();
     await foundCampground.save();
     req.flash("success","Review created");
@@ -87,8 +87,8 @@ router.delete("/:id", isLoggedIn, isCampOwner, asyncWrapper(async (req,res, next
 
 router.delete("/:id/:reviewId", isLoggedIn, isReviewOwner, asyncWrapper(async (req,res, next)=>{
     const {id, reviewId}=req.params;
-    await campground.findByIdAndUpdate(id,{$pull: {reviewsArray: reviewId}});
-    await review.findByIdAndDelete(reviewId);
+    const deletedReview=await review.findByIdAndDelete(reviewId);
+    await campground.findByIdAndUpdate(id,{ratingSum: ratingSum-deletedReview.rating, $pull: {reviewsArray: reviewId}});
     req.flash("success","Review deleted successfully");
     res.redirect(`/campgrounds/${id}`);
 }))

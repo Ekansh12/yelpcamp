@@ -65,4 +65,8 @@ router.get("/profile",isLoggedIn, (req,res, next)=>{
     res.render("profile.ejs");
 })
 
+router.get("/about", (req,res)=>{
+    res.render("about.ejs");
+})
+
 module.exports = router;

@@ -1,13 +1,15 @@
-<% if(success.length){ %>    
-    <div id="idAlert" class="alert alert-success alert-dismissible" role="alert">
-        <%= success %> 
-        <button id="idButton" type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-<% } %>
+<div class="container">
+    <% if(success.length){ %>    
+        <div id="idAlert" class="alert alert-success alert-dismissible mt-4" role="alert">
+            <%= success %> 
+            <button id="idButton" type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <% } %>
 
-<% if(error.length){ %>    
-    <div id="idAlert" class="alert alert-danger alert-dismissible" role="alert">
-        <%= error %> 
-        <button id="idButton" type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-<% } %>
+    <% if(error.length){ %>    
+        <div id="idAlert" class="alert alert-danger alert-dismissible mt-4" role="alert">
+            <%= error %> 
+            <button id="idButton" type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <% } %>
+</div>
