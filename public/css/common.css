@@ -49,3 +49,17 @@ main{
 #about:hover{
     text-decoration: underline;
 }
+
+.locationNotFound{
+    background-image:linear-gradient(rgba(0, 0, 0, 0.6),rgba(0, 0, 0, 0.6));
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+    font-size: xx-large;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFEFBA;
+
+}

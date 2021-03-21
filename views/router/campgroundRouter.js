@@ -29,7 +29,22 @@ const isReviewOwner= asyncWrapper(async(req,res, next)=>{
 })
 
 router.get("/",asyncWrapper(async (req, res, next)=>{
-    const campgrounds=await campground.find({});
+    let campgrounds;
+    if(req.query.sortby=="priceLow"){
+        campgrounds=await campground.find({})
+        .sort({price: 1})
+    }
+    else if(req.query.sortby=="priceHigh"){
+        campgrounds=await campground.find({})
+        .sort({price: -1})
+    }
+    else if(req.query.sortby=="newAdded"){
+        campgrounds=await campground.find({})
+        .sort({createdAt: -1})
+    }
+    else{
+        campgrounds=await campground.find({});
+    }
     res.render("campgrounds.ejs",{campgrounds});
 }))
 

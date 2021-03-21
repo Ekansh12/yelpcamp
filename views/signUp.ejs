@@ -1,34 +1,36 @@
 <%- layout("layouts/boilerplate.ejs") %>
 
-<div class="card shadow mx-auto mt-5 col-sm-8 col-md-6 col-lg-4 col-xl-3">
-    <div class="card-body">
-        <p class="card-title fs-1 text-center">Sign Up</p>
-        <div class="card-text mx-2">
-            <form action="/signUp" method="POST" novalidate class="validation-by-ekansh">
-                <div class="form-group my-3">
-                    <label for="name">Name: </label>
-                    <input class="form-control mt-1 fst-italic" type="text" id="name" name="user[name]" placeholder="Mad Max" required autofocus>
-                </div>
-                
-                <div class="form-group my-3">
-                    <label for="username">Username: </label>
-                    <input class="form-control mt-1 fst-italic" type="text" id="username" name="user[username]" placeholder="madmax" required>
-                </div>
-        
-                <div class="form-group my-3">
-                    <label for="email">Email: </label>
-                    <input class="form-control mt-1 fst-italic" type="email" id="email" name="user[email]" placeholder="mad@max.com" required >
-                    <div class="valid-feedback">Now it's cool</div>
-                </div>
-                
-                <div class="form-group my-3">
-                    <label for="password">Password: </label>
-                    <input class="form-control mt-1 fst-italic" type="password" id="password" name="user[password]" required>
-                </div>
-        
-                <button class="btn btn-success form-control">Sign Up</button>
-            </form>
+<div class="px-3">
+    <div class="card shadow mx-auto mt-5 col-sm-8 col-md-6 col-lg-4 col-xl-3">
+        <div class="card-body">
+            <p class="card-title fs-1 text-center">Sign Up</p>
+            <div class="card-text mx-2">
+                <form action="/signUp" method="POST" novalidate class="validation-by-ekansh">
+                    <div class="form-group my-3">
+                        <label for="name">Name: </label>
+                        <input class="form-control mt-1 fst-italic" type="text" id="name" name="user[name]" placeholder="Mad Max" required autofocus>
+                    </div>
+                    
+                    <div class="form-group my-3">
+                        <label for="username">Username: </label>
+                        <input class="form-control mt-1 fst-italic" type="text" id="username" name="user[username]" placeholder="madmax" required>
+                    </div>
+            
+                    <div class="form-group my-3">
+                        <label for="email">Email: </label>
+                        <input class="form-control mt-1 fst-italic" type="email" id="email" name="user[email]" placeholder="mad@max.com" required >
+                        <div class="valid-feedback">Now it's cool</div>
+                    </div>
+                    
+                    <div class="form-group my-3">
+                        <label for="password">Password: </label>
+                        <input class="form-control mt-1 fst-italic" type="password" id="password" name="user[password]" required>
+                    </div>
+            
+                    <button class="btn btn-success form-control">Sign Up</button>
+                </form>
+            </div>
+            <p class="text-center mt-3 mb-0">Have an account? <a id="underlineRemove" href="/login">Login</a></p>
         </div>
-        <p class="text-center mt-3 mb-0">Have an account? <a id="underlineRemove" href="/login">Login</a></p>
     </div>
 </div>

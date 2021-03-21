@@ -13,6 +13,7 @@ const user= require("./model/user.js");
 const passport=require("passport");
 const LocalStrategy= require("passport-local");
 const helmet=require("helmet");
+const moment= require("moment");
 
 app.set("views",path.join(__dirname,"views"));
 app.use(express.static(path.join(__dirname,"/public")));
@@ -47,9 +48,9 @@ app.listen(12345,()=>{ console.log("Server listen on port 12345") });
 
 app.use((req,res,next)=>{
     if(req.originalUrl=="/") req.session.returnTo="/campgrounds";
-    else if(!["/","/login","/signUp","/logout"].includes(req.originalUrl)) req.session.returnTo=req.originalUrl;
+    else if(!["/","/login","/signUp","/logout","/about"].includes(req.originalUrl)) req.session.returnTo=req.originalUrl;
     res.locals.currentUserInfo=req.user;
-
+    res.locals.moment=moment;
     res.locals.success=req.flash("success");
     res.locals.error=req.flash("error");
     next();

@@ -6,8 +6,32 @@
     <p class="fs-5 mt-0">View campgrounds from all over the world</p>
 </div>
 
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+    <div class="container">
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle pb-0" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Sort by </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <form action="/campgrounds" method="GET">
+                        <button class="dropdown-item" name="sortby" value="priceLow">Price: Low to High</button>
+                    </form>
+                    <form action="/campgrounds" method="GET">
+                        <button class="dropdown-item" name="sortby" value="priceHigh" >Price: High to Low</button>
+                    </form>
+                    <form action="/campgrounds" method="GET">
+                        <button class="dropdown-item" name="sortby" value="newAdded">Newly Added</button>
+                    </form>
+                </div>
+            </li>
+        </ul>
+        
+        
+    </div>
+  </nav>
+
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center p-3">
         <% for(let c of campgrounds){ %>
         <div id="gradient-bg" class="card m-3 px-0 shadow col-sm-10 col-md-5 col-lg-3 ">
             <img src="<%= c.image %>" class="card-img-top" alt="">
@@ -37,7 +61,7 @@
                             <% } %>  
                         </span>
                     </div>
-                    <div class="text-end">&#8377; <%= c.price %>/night</div>
+                    <div class="text-end">&#8377; <%= c.price %>/Night</div>
                 </div>
             </div>
         </div>

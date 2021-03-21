@@ -1,41 +1,44 @@
 <%- layout("layouts/boilerplate.ejs") %>
 
-<div class="card shadow mx-auto mt-5 col-sm-8 col-md-6 col-lg-5">
-    <div class="card-body">
-        <p class="card-title fs-1 text-center">Add new Campround</p>
-        <div class="card-text mx-2">
-            <form action="/campgrounds/new" method="POST" novalidate class="validation-by-ekansh">
-                <div class="form-group my-3">
-                    <label for="name">Name: </label>
-                    <input class="form-control" type="text" id="name" name="campground[name]" required>
-                    <div class="valid-feedback">Now it's cool</div>
-                </div>
-                
-                <div class="form-group my-3">
-                    <label for="price">Price/day: </label>
-                    <div class="input-group">
-                        <span class="input-group-text">Rs</span>
-                        <input class="form-control" type="number" id="price" name="campground[price]" required>
+<div class="px-3">
+
+    <div class="card shadow mx-auto mt-5 col-sm-8 col-md-6 col-lg-5">
+        <div class="card-body">
+            <p class="card-title fs-1 text-center">Add new Campround</p>
+            <div class="card-text mx-2">
+                <form action="/campgrounds/new" method="POST" novalidate class="validation-by-ekansh">
+                    <div class="form-group my-3">
+                        <label for="name">Name: </label>
+                        <input class="form-control" type="text" id="name" name="campground[name]" required>
+                        <div class="valid-feedback">Now it's cool</div>
                     </div>
-                </div>
-        
-                <div class="form-group my-3">
-                    <label for="location">Location: </label>
-                    <input class="form-control" type="text" id="location" name="campground[location]" required>
-                </div>
-        
-                <div class="form-group my-3">
-                    <label for="image">Image Url: </label>
-                    <input class="form-control" type="text" id="image" name="campground[image]">
-                </div>
-        
-                <div class="form-group my-3">
-                    <label for="description">Description: </label>
-                    <textarea class="form-control" id="description" name="campground[description]" cols="3" rows="3" required></textarea>
-                </div>
-                <button class="btn btn-success">Add campground</button>
-            </form>
+                    
+                    <div class="form-group my-3">
+                        <label for="price">Price/day: </label>
+                        <div class="input-group">
+                            <span class="input-group-text">Rs</span>
+                            <input class="form-control" type="number" id="price" name="campground[price]" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group my-3">
+                        <label for="location">Location: </label>
+                        <input class="form-control" type="text" id="location" name="campground[location]" required>
+                    </div>
+                    
+                    <div class="form-group my-3">
+                        <label for="image">Image Url: </label>
+                        <input class="form-control" type="text" id="image" name="campground[image]">
+                    </div>
+                    
+                    <div class="form-group my-3">
+                        <label for="description">Description: </label>
+                        <textarea class="form-control" id="description" name="campground[description]" cols="3" rows="3" required></textarea>
+                    </div>
+                    <button class="btn btn-success">Add campground</button>
+                </form>
+            </div>
+            
         </div>
-        
-    </div>
-</div>  
+    </div>  
+</div>

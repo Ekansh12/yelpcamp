@@ -12,26 +12,26 @@
                     <a class="nav-link" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="/campgrounds">Campgrounds</a>
+                    <a id="camp" class="nav-link " href="/campgrounds">Campgrounds</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/campgrounds/new">Add Campground</a>
+                    <a id="new" class="nav-link" href="/campgrounds/new">Add Campground</a>
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto">
                 <% if(currentUserInfo){ %> 
                     <li class="nav-item">
-                        <a class="nav-link" href="/profile">My Profile</a>
+                        <a id="profile" class="nav-link" href="/profile">My Profile</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/logout">Logout</a>
                     </li>
                 <% }else{ %> 
                     <li class="nav-item">
-                        <a class="nav-link" href="/login">Login</a>
+                        <a id="login" class="nav-link" href="/login">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/signUp">Sign Up</a>
+                        <a id="signUp" class="nav-link" href="/signUp">Sign Up</a>
                     </li>
                 <% } %> 
             </ul>

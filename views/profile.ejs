@@ -1,5 +1,6 @@
 <%- layout("layouts/boilerplate.ejs") %>
 
+<div class="px-3">
     <div class="card shadow mx-auto mt-5 col-sm-8 col-md-6 col-lg-4 col-xl-3">
         <div class="card-body">
             <p class="card-title fs-1 text-center">Profile</p>
@@ -18,7 +19,11 @@
                     <div class="form-group my-3">
                         <label for="email">Email: </label>
                         <input class="form-control fst-italic" type="email" id="email" value=<%= currentUserInfo.email %>  readonly>
-                        <div class="valid-feedback">Now it's cool</div>
+                    </div>
+
+                    <div class="form-group my-3">
+                        <label for="registeredOn">Registered Date: </label>
+                        <input class="form-control fst-italic" type="text" id="registeredOn" value="<%= moment(currentUserInfo.registeredOn).format("LL") %>"  readonly>
                     </div>
                     
                 </form>
@@ -26,3 +31,4 @@
             
         </div>
     </div>  
+</div>

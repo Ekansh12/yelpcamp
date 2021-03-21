@@ -2898,15 +2898,6 @@ module.exports = [
         state: "Washington",
     },
     {
-        city: "Lee's Summit",
-        growth_from_2000_to_2013: "31.2%",
-        latitude: 38.9108408,
-        longitude: -94.3821724,
-        population: "93184",
-        rank: "323",
-        state: "Missouri",
-    },
-    {
         city: "Federal Way",
         growth_from_2000_to_2013: "8.8%",
         latitude: 47.3223221,
