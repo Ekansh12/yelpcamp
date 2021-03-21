@@ -51,7 +51,9 @@ const Seeding = async ()=>{
             image: imgs[i],
             description: "Explore our campground and if you already visited then rate our campground",
             owner: user1._id,
-            ratingSum: 0
+            ratingSum: 0,
+            avgRating: 0,
+            totalReviews: 0
         }
         campSeed.push(obj);
     }

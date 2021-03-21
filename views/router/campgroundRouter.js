@@ -38,6 +38,14 @@ router.get("/",asyncWrapper(async (req, res, next)=>{
         campgrounds=await campground.find({})
         .sort({price: -1})
     }
+    else if(req.query.sortby=="highRated"){
+        campgrounds=await campground.find({})
+        .sort({avgRating: -1})
+    }
+    else if(req.query.sortby=="mostRev"){
+        campgrounds=await campground.find({})
+        .sort({totalReviews: -1})
+    }
     else if(req.query.sortby=="newAdded"){
         campgrounds=await campground.find({})
         .sort({createdAt: -1})
@@ -83,6 +91,8 @@ router.post("/:id", isLoggedIn, asyncWrapper(async (req, res, next)=>{
     const foundCampground=await campground.findById(id);
     foundCampground.reviewsArray.push(newReview);
     foundCampground.ratingSum+= parseInt(rating);
+    foundCampground.totalReviews+= 1;
+    foundCampground.avgRating= foundCampground.ratingSum/foundCampground.totalReviews;
     await newReview.save();
     await foundCampground.save();
     req.flash("success","Review created");
@@ -103,7 +113,11 @@ router.delete("/:id", isLoggedIn, isCampOwner, asyncWrapper(async (req,res, next
 router.delete("/:id/:reviewId", isLoggedIn, isReviewOwner, asyncWrapper(async (req,res, next)=>{
     const {id, reviewId}=req.params;
     const deletedReview=await review.findByIdAndDelete(reviewId);
-    await campground.findByIdAndUpdate(id,{ratingSum: ratingSum-deletedReview.rating, $pull: {reviewsArray: reviewId}});
+    const camp=await campground.findByIdAndUpdate(id, {$pull: {reviewsArray: reviewId}}, {new: true});
+    camp.ratingSum-= deletedReview.rating;
+    camp.totalReviews-= 1;
+    camp.avgRating= (camp.ratingSum - deletedReview.rating)/(camp.totalReviews - 1);
+    await camp.save();
     req.flash("success","Review deleted successfully");
     res.redirect(`/campgrounds/${id}`);
 }))

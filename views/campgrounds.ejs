@@ -20,6 +20,12 @@
                         <button class="dropdown-item" name="sortby" value="priceHigh" >Price: High to Low</button>
                     </form>
                     <form action="/campgrounds" method="GET">
+                        <button class="dropdown-item" name="sortby" value="highRated">Highest Rated</button>
+                    </form>
+                    <form action="/campgrounds" method="GET">
+                        <button class="dropdown-item" name="sortby" value="mostRev">Most Reviewed</button>
+                    </form> 
+                    <form action="/campgrounds" method="GET">
                         <button class="dropdown-item" name="sortby" value="newAdded">Newly Added</button>
                     </form>
                 </div>
@@ -42,7 +48,7 @@
                 <div class="card-text">
                     <div class="text-muted">
                         <% if(c.reviewsArray.length>0){ %> 
-                            <% const stars= Math.round(c.ratingSum/c.reviewsArray.length) %> 
+                            <% const stars= Math.round(c.avgRating) %> 
                             <% for(let i=1;i<=5;i++){ %>
                                     <% if(i>stars){ %>
                                         <span class="fa fa-star"></span> 
