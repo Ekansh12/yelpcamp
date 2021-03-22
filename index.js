@@ -94,7 +94,7 @@ app.all("*",(req, res, next)=>{
 })
 
 app.use((err, req, res, next)=>{
-    req.session.returnTo="/campgrounds";
+    // req.session.returnTo="/campgrounds";
     const {message="Something's not goood..." , statusCode=500}=err;
     res.status(statusCode).render("error.ejs",{message,err});
 })
