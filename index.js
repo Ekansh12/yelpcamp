@@ -69,7 +69,7 @@ passport.serializeUser(user.serializeUser());
 passport.deserializeUser(user.deserializeUser());
 
 const port= process.env.PORT || 12345;
-app.listen(port,()=>{ console.log(`Server listen on port ${port}`) });
+app.listen(port,()=>{ console.log(`http://localhost:${port}`) });
 
 app.use((req,res,next)=>{
     if(req.originalUrl=="/") req.session.returnTo="/campgrounds";
