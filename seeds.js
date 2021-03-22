@@ -41,8 +41,8 @@ const Seeding = async ()=>{
 
     const userSeed=[];
     for(let i=0;i<userData.length;i++){
-        const obj= new user(userData[i]);
-        const fakeUser= await user.register(obj,userPassword[i]);
+        const userObj= new user(userData[i]);
+        const fakeUser= await user.register(userObj,userPassword[i]);
         userSeed.push(fakeUser);
     }
     
@@ -54,7 +54,7 @@ const Seeding = async ()=>{
         const price= Math.floor(Math.random()*10000 + 3000 + Math.random()*2000);
         const num2= Math.floor(Math.random()*userData.length);
 
-        const obj={
+        const campObj={
             name: `${firstName[first]} ${lastName[last]}`,
             price: price,
             location: `${cities[num].city}, ${cities[num].state}`,
@@ -65,7 +65,7 @@ const Seeding = async ()=>{
             avgRating: 0,
             totalReviews: 0
         }
-        campSeed.push(obj);
+        campSeed.push(campObj);
     }
 
     await campground.insertMany(campSeed);

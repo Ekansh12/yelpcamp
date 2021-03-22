@@ -30,7 +30,7 @@
                             </ul>
                             <small class="text-muted mt-5">
                                 <% if(foundCampground.reviewsArray.length>0){ %> 
-                                    <% const stars= Math.round(foundCampground.ratingSum/foundCampground.reviewsArray.length) %> 
+                                    <% const stars= Math.round(foundCampground.avgRating) %> 
                                     <% for(let i=1;i<=5;i++){ %>
                                         <% if(i>stars){ %>
                                             <span class="fa fa-star"></span> 

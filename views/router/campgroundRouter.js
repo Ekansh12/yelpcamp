@@ -6,7 +6,7 @@ const asyncWrapper=require("../../errorHandler/asyncWrapper.js");
 
 const isLoggedIn= (req, res, next)=>{
     if(!req.isAuthenticated()){
-        req.flash("error","You must Sign In first!!");
+        req.flash("error","You must Sign Up first!!");
         res.redirect("/signUp");
     }
     next();
@@ -116,8 +116,10 @@ router.delete("/:id/:reviewId", isLoggedIn, isReviewOwner, asyncWrapper(async (r
     const camp=await campground.findByIdAndUpdate(id, {$pull: {reviewsArray: reviewId}}, {new: true});
     camp.ratingSum-= deletedReview.rating;
     camp.totalReviews-= 1;
-    camp.avgRating= (camp.ratingSum - deletedReview.rating)/(camp.totalReviews - 1);
-    await camp.save();
+    if(camp.totalReviews) camp.avgRating= camp.ratingSum/camp.totalReviews;
+    else camp.avgRating=0;
+    const ss=await camp.save();
+    console.log(ss);
     req.flash("success","Review deleted successfully");
     res.redirect(`/campgrounds/${id}`);
 }))
