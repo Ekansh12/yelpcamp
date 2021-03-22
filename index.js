@@ -68,9 +68,6 @@ passport.use(new LocalStrategy(user.authenticate()));
 passport.serializeUser(user.serializeUser());
 passport.deserializeUser(user.deserializeUser());
 
-const port= process.env.PORT || 12345;
-app.listen(port,()=>{ console.log(`http://localhost:${port}`) });
-
 app.use((req,res,next)=>{
     if(req.originalUrl=="/") req.session.returnTo="/campgrounds";
     else if(!["/","/login","/signUp","/logout","/about"].includes(req.originalUrl)) req.session.returnTo=req.originalUrl;
@@ -98,3 +95,6 @@ app.use((err, req, res, next)=>{
     const {message="Something's not goood..." , statusCode=500}=err;
     res.status(statusCode).render("error.ejs",{message,err});
 })
+
+const port= process.env.PORT || 12345;
+app.listen(port,()=>{ console.log(`http://localhost:${port}`) });
