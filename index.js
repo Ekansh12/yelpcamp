@@ -14,6 +14,21 @@ const passport=require("passport");
 const LocalStrategy= require("passport-local");
 const helmet=require("helmet");
 const moment= require("moment");
+const mongoose =require("mongoose");
+
+mongoose.connect('mongodb://localhost:27017/yelp-camp', {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false
+});
+
+const db = mongoose.connection;
+
+db.on("error", console.error.bind(console, "Mongoose Error..."));
+db.once("open", () => {
+    console.log("Mongoose Connected...");
+});
 
 app.set("views",path.join(__dirname,"views"));
 app.use(express.static(path.join(__dirname,"/public")));

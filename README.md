@@ -18,7 +18,7 @@ Mapbox was used to locate a campground.
 
 * Added map feature to view location of a campground.
 
-* Sort campgrounds on basis of price and date.
+* Sort campgrounds on basis of price, date and reviews.
 
 ## Install
 

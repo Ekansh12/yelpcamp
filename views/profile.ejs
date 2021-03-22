@@ -3,27 +3,34 @@
 <div class="px-3">
     <div class="card shadow mx-auto mt-5 col-sm-8 col-md-6 col-lg-4 col-xl-3">
         <div class="card-body">
-            <p class="card-title fs-1 text-center">Profile</p>
+            <p class="card-title fs-1 text-center">
+                <% if(currentUserInfo && foundUser._id.equals(currentUserInfo._id)){ %>
+                    My Profile
+                <% } else{ %>
+                    Profile
+                <% } %>    
+            </p>
+            
             <div class="card-text mx-2">
                 <form>
                     <div class="form-group my-3">
                         <label for="name">Name: </label>
-                        <input class="form-control fst-italic" type="text" id="name" value="<%= currentUserInfo.name %>" readonly>
+                        <input class="form-control fst-italic" type="text" id="name" value="<%= foundUser.name %>" readonly>
                     </div>
         
                     <div class="form-group my-3">
                         <label for="username">Username: </label>
-                        <input class="form-control fst-italic" type="text" id="username" value=<%= currentUserInfo.username %> readonly>
+                        <input class="form-control fst-italic" type="text" id="username" value=<%= foundUser.username %> readonly>
                     </div>
                     
                     <div class="form-group my-3">
                         <label for="email">Email: </label>
-                        <input class="form-control fst-italic" type="email" id="email" value=<%= currentUserInfo.email %>  readonly>
+                        <input class="form-control fst-italic" type="email" id="email" value=<%= foundUser.email %>  readonly>
                     </div>
 
                     <div class="form-group my-3">
                         <label for="registeredOn">Registered Date: </label>
-                        <input class="form-control fst-italic" type="text" id="registeredOn" value="<%= moment(currentUserInfo.registeredOn).format("LL") %>"  readonly>
+                        <input class="form-control fst-italic" type="text" id="registeredOn" value="<%= moment(foundUser.registeredOn).format("LL") %>"  readonly>
                     </div>
                     
                 </form>

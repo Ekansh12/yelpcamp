@@ -61,9 +61,11 @@ router.get("/logout",isLoggedIn, (req,res, next)=>{
     res.redirect("/");
 })
 
-router.get("/profile",isLoggedIn, (req,res, next)=>{
-    res.render("profile.ejs");
-})
+router.get("/profile/:id",isLoggedIn, asyncWrapper( async(req,res, next)=>{
+    const {id}= req.params;
+    const foundUser= await user.findById(id);
+    res.render("profile.ejs",{foundUser});
+}))
 
 router.get("/about", (req,res)=>{
     res.render("about.ejs");

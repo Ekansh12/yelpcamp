@@ -53,7 +53,7 @@
                         </div>
                         
                         <div class="card-footer">
-                            - Submitted by <b><%= foundCampground.owner.username %></b> on <%= moment(foundCampground.createdAt).format('LL') %> 
+                            - Submitted by <b><a href="/profile/<%= foundCampground.owner._id %>"><%= foundCampground.owner.username %></a></b> on <%= moment(foundCampground.createdAt).format('LL') %> 
                             <% if(currentUserInfo && foundCampground.owner.equals(currentUserInfo._id)){ %> 
                                     <form class="inline" action="/campgrounds/<%= foundCampground._id %>?_method=DELETE" method="POST">
                                         <button class="btn btn-danger">Delete campground</button>
