@@ -14,7 +14,11 @@ const userSchema=new mongoose.Schema({
     registeredOn: { 
         type: Date,
         default: Date.now 
-    }
+    },
+    campOwned:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "campground"
+    }]
 })
 
 userSchema.plugin(passportLM);

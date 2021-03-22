@@ -48,11 +48,32 @@ const Seeding = async ()=>{
     
     const campSeed=[];
     for(let i=0;i<imgs.length;i++){
+
+        const revArray=[];
+        const revNum= Math.floor(Math.random()*userData.length);
+        const campOwner= Math.floor(Math.random()*userData.length);
+        let sum=0;
+
+        for(let j=1;j<=revNum;j++){
+            const revRating= Math.floor(Math.random()*5 +1);
+            const revOwner= (campOwner+j)%userData.length;
+            sum+=revRating;
+
+            const revObj=new review({
+                rating: revRating,
+                text: "I visited your campground and here is the review",
+                owner: userSeed[revOwner]._id
+            })
+
+            const savedReview= await revObj.save();
+            revArray.push(savedReview._id);
+        }
+
         const first= Math.floor(Math.random()*firstName.length);
         const last= Math.floor(Math.random()*lastName.length);
         const num= Math.floor(Math.random()*cities.length);
         const price= Math.floor(Math.random()*10000 + 3000 + Math.random()*2000);
-        const num2= Math.floor(Math.random()*userData.length);
+        const avgRate= revNum>0 ? Math.round(sum/revNum) :0 ;
 
         const campObj={
             name: `${firstName[first]} ${lastName[last]}`,
@@ -60,11 +81,13 @@ const Seeding = async ()=>{
             location: `${cities[num].city}, ${cities[num].state}`,
             image: imgs[i],
             description: "Explore our campground and if you already visited then rate our campground",
-            owner: userSeed[num2]._id,
-            ratingSum: 0,
-            avgRating: 0,
-            totalReviews: 0
+            reviewsArray: revArray,
+            owner: userSeed[campOwner]._id,
+            ratingSum: sum,
+            totalReviews: revNum,
+            avgRating: avgRate
         }
+
         campSeed.push(campObj);
     }
 

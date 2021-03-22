@@ -1,3 +1,5 @@
+// require('dotenv').config();
+
 const express=require("express");
 const app=express();
 const path=require("path");
@@ -15,8 +17,10 @@ const LocalStrategy= require("passport-local");
 const helmet=require("helmet");
 const moment= require("moment");
 const mongoose =require("mongoose");
+const MongoStore = require('connect-mongo');
 
-mongoose.connect('mongodb://localhost:27017/yelp-camp', {
+const db_url= process.env.DB_URL || 'mongodb://localhost:27017/yelp-camp';
+mongoose.connect(db_url, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
@@ -37,14 +41,19 @@ app.use(bodyparser.urlencoded({extended:true}));
 app.use(methodOverride("_method"));
 
 app.use(session({
+    store: MongoStore.create({
+        mongoUrl: db_url,
+        secret: "YelpCamp",
+        touchAfter: 24*60*60 //s
+    }),
     name: "_uazx",
-    secret: "howTheHellIKnow",
+    secret: "YelpCamp",
     resave: false,
     saveUninitialized: true,
     cookie:{
         httpOnly:true,
         // secure: true,
-        expires: Date.now() + 3*24*60*60*1000,
+        expires: Date.now() + 3*24*60*60*1000, //ms
         maxAge: 3*24*60*60*1000
     }
 }));
@@ -59,7 +68,8 @@ passport.use(new LocalStrategy(user.authenticate()));
 passport.serializeUser(user.serializeUser());
 passport.deserializeUser(user.deserializeUser());
 
-app.listen(12345,()=>{ console.log("Server listen on port 12345") });
+const port= process.env.PORT || 12345;
+app.listen(port,()=>{ console.log(`Server listen on port ${port}`) });
 
 app.use((req,res,next)=>{
     if(req.originalUrl=="/") req.session.returnTo="/campgrounds";

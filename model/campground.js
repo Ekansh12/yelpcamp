@@ -32,8 +32,8 @@ const campgroundSchema= new mongoose.Schema({
         ref: "user"
     },
     ratingSum: Number,
-    avgRating: Number,
-    totalReviews: Number
+    totalReviews: Number,
+    avgRating: Number
 })
 
 const campground=mongoose.model("campground",campgroundSchema);

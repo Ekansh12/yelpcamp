@@ -32,19 +32,19 @@ router.get("/",asyncWrapper(async (req, res, next)=>{
     let campgrounds;
     if(req.query.sortby=="priceLow"){
         campgrounds=await campground.find({})
-        .sort({price: 1})
+        .sort({price: 1, avgRating: -1, totalReviews: -1, createdAt: -1})
     }
     else if(req.query.sortby=="priceHigh"){
         campgrounds=await campground.find({})
-        .sort({price: -1})
+        .sort({price: -1, avgRating: -1, totalReviews: -1, createdAt: -1})
     }
     else if(req.query.sortby=="highRated"){
         campgrounds=await campground.find({})
-        .sort({avgRating: -1})
+        .sort({avgRating: -1, totalReviews: -1, price: 1, createdAt: -1})
     }
     else if(req.query.sortby=="mostRev"){
         campgrounds=await campground.find({})
-        .sort({totalReviews: -1})
+        .sort({totalReviews: -1, avgRating: -1, price: 1, createdAt: -1})
     }
     else if(req.query.sortby=="newAdded"){
         campgrounds=await campground.find({})
@@ -70,8 +70,10 @@ router.post("/new",isLoggedIn, asyncWrapper(async (req, res, next)=>{
 
 router.get("/:id", asyncWrapper(async (req, res, next)=>{
     const {id}=req.params;
-    const foundCampground=await campground.findById(id).populate({
+    const foundCampground=await campground.findById(id)
+    .populate({
         path: "reviewsArray",
+        options: { sort: { createdAt: -1}},
         populate: {
             path: "owner"
         }
@@ -92,7 +94,7 @@ router.post("/:id", isLoggedIn, asyncWrapper(async (req, res, next)=>{
     foundCampground.reviewsArray.push(newReview);
     foundCampground.ratingSum+= parseInt(rating);
     foundCampground.totalReviews+= 1;
-    foundCampground.avgRating= foundCampground.ratingSum/foundCampground.totalReviews;
+    foundCampground.avgRating= Math.round(foundCampground.ratingSum/foundCampground.totalReviews);
     await newReview.save();
     await foundCampground.save();
     req.flash("success","Review created");
@@ -116,10 +118,9 @@ router.delete("/:id/:reviewId", isLoggedIn, isReviewOwner, asyncWrapper(async (r
     const camp=await campground.findByIdAndUpdate(id, {$pull: {reviewsArray: reviewId}}, {new: true});
     camp.ratingSum-= deletedReview.rating;
     camp.totalReviews-= 1;
-    if(camp.totalReviews) camp.avgRating= camp.ratingSum/camp.totalReviews;
+    if(camp.totalReviews) camp.avgRating= Math.round(camp.ratingSum/camp.totalReviews);
     else camp.avgRating=0;
-    const ss=await camp.save();
-    console.log(ss);
+    await camp.save();
     req.flash("success","Review deleted successfully");
     res.redirect(`/campgrounds/${id}`);
 }))
