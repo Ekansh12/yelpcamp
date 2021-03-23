@@ -28,6 +28,26 @@ const isReviewOwner= asyncWrapper(async(req,res, next)=>{
     res.redirect(`/campgrounds/${id}`);
 })
 
+const isFirstReview= asyncWrapper(async(req, res, next)=>{
+    const {id}=req.params;
+    const camp= await campground.findById(id).populate({
+        path: "reviewsArray",
+        select: "owner",
+        populate: { 
+            path: "owner",
+            select: "_id"
+        }
+    })
+    const length=camp.reviewsArray.length;
+    for(let i=0;i<length;i++){
+        if(camp.reviewsArray[i].owner._id.equals(req.user._id)){
+            req.flash("error", "You already review this Campground, want to create another then delete the one you created for this campground");
+            return res.redirect(`/campgrounds/${id}`);
+        }
+    }
+    return next();
+})
+
 router.get("/",asyncWrapper(async (req, res, next)=>{
     let campgrounds;
     if(req.query.sortby=="priceLow"){
@@ -85,7 +105,7 @@ router.get("/:id", asyncWrapper(async (req, res, next)=>{
     res.render("show.ejs",{foundCampground});
 }))
 
-router.post("/:id", isLoggedIn, asyncWrapper(async (req, res, next)=>{
+router.post("/:id", isLoggedIn, isFirstReview, asyncWrapper(async (req, res, next)=>{
     const {id}=req.params;
     const {text, rating} = req.body;
     const newReview= new review({text:text,rating:rating});

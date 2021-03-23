@@ -4,5 +4,5 @@ if (alert) {
     setTimeout(() => {
         var button = document.querySelector('#idButton');
         if(button) button.click();
-    }, 4000)
+    }, 6000)
 }

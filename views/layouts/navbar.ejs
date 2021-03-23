@@ -19,7 +19,7 @@
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto">
-                <% if(currentUserInfo!=undefined){ %> 
+                <% if(currentUserInfo){ %> 
                     <li class="nav-item">
                         <a id="profile" class="nav-link" href="/profile/<%= currentUserInfo._id %>">My Profile</a>
                     </li>

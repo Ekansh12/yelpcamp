@@ -31,9 +31,18 @@ const campgroundSchema= new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "user"
     },
-    ratingSum: Number,
-    totalReviews: Number,
-    avgRating: Number
+    ratingSum:{
+        type: Number,
+        default: 0
+    },
+    totalReviews:{
+        type: Number,
+        default: 0
+    },
+    avgRating:{
+        type: Number,
+        default: 0
+    }
 })
 
 const campground=mongoose.model("campground",campgroundSchema);

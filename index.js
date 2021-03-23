@@ -79,7 +79,6 @@ app.use((req,res,next)=>{
 })
 
 app.get("/",(req,res)=>{
-    console.log(res.locals);
     res.render("home.ejs"); 
 })
 
@@ -92,7 +91,7 @@ app.all("*",(req, res, next)=>{
 })
 
 app.use((err, req, res, next)=>{
-    // req.session.returnTo="/campgrounds";
+    req.session.returnTo="/campgrounds";
     const {message="Something's not goood..." , statusCode=500}=err;
     res.status(statusCode).render("error.ejs",{message,err});
 })

@@ -5,6 +5,7 @@
 <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
 <script src="https://unpkg.com/es6-promise@4.2.4/dist/es6-promise.auto.min.js"></script>
 <script src="https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.min.js"></script>
+
     
     <div class="container mb-3 mt-5">
 
@@ -117,8 +118,13 @@
                     <div class="mb-3">
                         <label for="text" class="form-label">Review:</label>
                         <textarea class="form-control" id="text" rows="3" name="text" required></textarea>
-                    </div>                                               
-                    <button class="btn btn-sm btn-success">Add review</button>
+                    </div>
+                    <% if(foundCampground.owner.equals(currentUserInfo._id)){ %>
+                        <button type="button" class="btn btn-secondary" data-bs-toggle="popover" title="Access Denied" 
+                        data-bs-content="You can't review your own campground">Add review</button>  
+                    <% }else{ %>                            
+                        <button class="btn btn-success">Add review</button>
+                    <% } %> 
                 </form>
             </div>
         <% } %> 
@@ -161,62 +167,15 @@
     </div>
 
 
+<script>
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+        return new bootstrap.Popover(popoverTriggerEl)
+    })
+</script>
 
-    <script>
-        const error= ()=>{
-            const map = new mapboxgl.Map({
-                container: 'map',
-                style: 'mapbox://styles/mapbox/streets-v11',
-                center:[78.9629,20.5937],
-                zoom:2.9
-            });
+<script>
+    const campLocation= '<%- foundCampground.location %>'
+</script>
 
-            const para = document.createElement("p");
-            para.classList.add("locationNotFound");
-            const node = document.createTextNode("This place is not found!!");
-            para.appendChild(node);
-            const element = document.getElementById("map");
-            element.appendChild(para);
-        }
-
-        mapboxgl.accessToken = "pk.eyJ1IjoiZWthbnNoMjQiLCJhIjoiY2ttZ21uMTY2MzFobzJ2bGFjYWFqcGx6NiJ9.RYkq5Y8YGhcnrYlUS6ABpw";
-        const mapboxClient = mapboxSdk({ accessToken: mapboxgl.accessToken });
-        
-        mapboxClient.geocoding
-        .forwardGeocode({
-            query: '<%= foundCampground.location %> ',
-            autocomplete: false,
-            limit: 1
-        })
-        .send(error())
-        .then(function (response) {
-            if (response && response.body && response.body.features && response.body.features.length){
-                const layerList = document.getElementById('map');
-                const inputs = layerList.getElementsByClassName('input');
-                const button=layerList.getElementsByClassName("button");
-                const para=layerList.getElementsByClassName("locationNotFound")[0];
-                para.classList.add("d-none");
-                
-                const feature = response.body.features[0];
-                const map = new mapboxgl.Map({
-                    container: 'map',
-                    style: 'mapbox://styles/mapbox/streets-v11',
-                    center: feature.center,
-                    zoom: 12
-                });
-                
-                function switchLayer(layer) {
-                    const layerId = layer.target.id;
-                    map.setStyle('mapbox://styles/mapbox/' + layerId);
-                }
-
-                button[0].onclick = ()=> map.flyTo({ center: feature.center });;
-                
-                for (let i = 0; i < inputs.length; i++) {
-                    inputs[i].onclick = switchLayer;
-                }
-                new mapboxgl.Marker().setLngLat(feature.center).addTo(map);
-                map.addControl(new mapboxgl.NavigationControl());
-            }
-        });
-    </script>
+<script src="/js/map-box.js"></script>

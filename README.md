@@ -10,7 +10,9 @@ Mapbox was used to locate a campground.
 ## Features
 * Users can create and remove campgrounds(which they own).
 
-* Users can review campgrounds and remove their review.
+* Users can review campgrounds once and remove their review.
+
+* User can't review his own campground.
 
 * User profiles include information of the user.
 
