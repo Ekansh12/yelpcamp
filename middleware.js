@@ -3,13 +3,13 @@ const review=require("./model/review.js");
 const user = require("./model/user.js");
 const asyncWrapper=require("./errorHandler/asyncWrapper.js");
 
-module.exports.isLoggedIn= (req, res, next)=>{
+module.exports.isLoggedIn= asyncWrapper( async(req, res, next)=>{
     if(!req.isAuthenticated()){
         req.flash("error","You must Sign Up first!!");
-        res.redirect("/signUp");
+        return res.redirect("/signUp");
     }
     next();
-}
+})
 
 module.exports.isCampOwner= asyncWrapper(async(req,res, next)=>{
     const {id}=req.params;
