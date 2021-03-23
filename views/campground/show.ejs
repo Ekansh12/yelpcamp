@@ -1,5 +1,6 @@
 <%- layout("layouts/boilerplate.ejs") %> 
 <link rel="stylesheet" href="/css/star-growRotate.css">
+<link rel="stylesheet" href="/css/mapbox.css">  
 
 <link href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" rel="stylesheet">
 <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
@@ -19,7 +20,7 @@
                 
                 <div class="">
                     <div class="card">
-                        <div class="card-title">
+                        <div class="card-title card-header">
                             <h1 class="text-center"><%= foundCampground.name %> </h1>
                         </div>
                         
@@ -67,14 +68,18 @@
                                                     
                 </div>
 
-                <div id='map' class="col" style='width: 400px; height: 300px;'>
+                <div id='map' class="col my-3 border border-secondary">
                     <div class="mapboxgl-control-container">
                         <div class="mapboxgl-ctrl-top-left">
                             <div class="mapboxgl-ctrl mapboxgl-ctrl-group">
-                                <input class="input" id="streets-v11" type="button" name="rtoggle" value="streets" checked="checked">
-                                <input class="input" id="dark-v10" type="button" name="rtoggle" value="dark">
-                                <input class="input" id="satellite-v9" type="button" name="rtoggle" value="satellite">
-                                <button class="button btn">Center</button>
+                                <input class="input" id="streets-v11" type="button" name="rtoggle" value="Streets" checked="checked">
+                                <input class="input" id="dark-v10" type="button" name="rtoggle" value="Dark">
+                                <input class="input" id="satellite-v9" type="button" name="rtoggle" value="Satellite">
+                            </div>
+                        </div>
+                        <div class="mapboxgl-ctrl-bottom-left">
+                            <div class="mapboxgl-ctrl mapboxgl-ctrl-group">
+                                <input class="button" type="button" name="rtoggle" value="Center">
                             </div>
                         </div>
                     </div>

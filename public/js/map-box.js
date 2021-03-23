@@ -11,6 +11,8 @@ const error= ()=>{
     para.appendChild(node);
     const element = document.getElementById("map");
     element.appendChild(para);
+
+    
 }
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiZWthbnNoMjQiLCJhIjoiY2ttZ21uMTY2MzFobzJ2bGFjYWFqcGx6NiJ9.RYkq5Y8YGhcnrYlUS6ABpw';
@@ -38,6 +40,8 @@ mapboxClient.geocoding
             center: feature.center,
             zoom: 12
         });
+
+        map.scrollZoom.disable();
         
         function switchLayer(layer) {
             const layerId = layer.target.id;

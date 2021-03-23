@@ -1,52 +1,10 @@
 const express=require("express");
 const router=express.Router({mergeParams: true});
-const campground=require("../../model/campground.js");
-const review=require("../../model/review.js");
-const asyncWrapper=require("../../errorHandler/asyncWrapper.js");
+const campground=require("../model/campground.js");
+const review=require("../model/review.js");
+const asyncWrapper=require("../errorHandler/asyncWrapper.js");
 
-const isLoggedIn= (req, res, next)=>{
-    if(!req.isAuthenticated()){
-        req.flash("error","You must Sign Up first!!");
-        res.redirect("/signUp");
-    }
-    next();
-}
-
-const isCampOwner= asyncWrapper(async(req,res, next)=>{
-    const {id}=req.params;
-    const camp= await campground.findById(id);
-    if(camp.owner.equals(req.user._id)) return next();
-    req.flash("error","Access denied");
-    res.redirect(`/campgrounds/${id}`);
-})
-
-const isReviewOwner= asyncWrapper(async(req,res, next)=>{
-    const {id, reviewId}=req.params;
-    const rev= await review.findById(reviewId);
-    if(rev.owner.equals(req.user._id)) return next();
-    req.flash("error","Access denied");
-    res.redirect(`/campgrounds/${id}`);
-})
-
-const isFirstReview= asyncWrapper(async(req, res, next)=>{
-    const {id}=req.params;
-    const camp= await campground.findById(id).populate({
-        path: "reviewsArray",
-        select: "owner",
-        populate: { 
-            path: "owner",
-            select: "_id"
-        }
-    })
-    const length=camp.reviewsArray.length;
-    for(let i=0;i<length;i++){
-        if(camp.reviewsArray[i].owner._id.equals(req.user._id)){
-            req.flash("error", "You already review this Campground, want to create another then delete the one you created for this campground");
-            return res.redirect(`/campgrounds/${id}`);
-        }
-    }
-    return next();
-})
+const { isLoggedIn, isCampOwner, isReviewOwner, isFirstReview}= require("../middleware.js");
 
 router.get("/",asyncWrapper(async (req, res, next)=>{
     let campgrounds;
@@ -73,14 +31,14 @@ router.get("/",asyncWrapper(async (req, res, next)=>{
     else{
         campgrounds=await campground.find({});
     }
-    res.render("campgrounds.ejs",{campgrounds});
+    res.render("campground/campgrounds.ejs",{campgrounds});
 }))
 
-router.get("/new",isLoggedIn, (req,res, next)=>{
-    res.render("new.ejs");
+router.get("/new", isLoggedIn, (req,res, next)=>{
+    res.render("campground/new.ejs");
 })
 
-router.post("/new",isLoggedIn, asyncWrapper(async (req, res, next)=>{
+router.post("/new", isLoggedIn, asyncWrapper(async (req, res, next)=>{
     const newCampground=new campground(req.body.campground);
     newCampground.owner=req.user._id;
     await newCampground.save();
@@ -102,7 +60,7 @@ router.get("/:id", asyncWrapper(async (req, res, next)=>{
         req.flash("error","Campground not found");
         res.redirect("/campgrounds");
     }
-    res.render("show.ejs",{foundCampground});
+    res.render("campground/show.ejs",{foundCampground});
 }))
 
 router.post("/:id", isLoggedIn, isFirstReview, asyncWrapper(async (req, res, next)=>{

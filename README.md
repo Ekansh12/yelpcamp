@@ -50,3 +50,4 @@ $ node seeds.js
 $ node index.js
 ```
 
+> The front-end of show page is not good, so also feel free to contribute in this repo to make it more stylish or if you find any bug.

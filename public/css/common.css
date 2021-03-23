@@ -63,3 +63,8 @@ main{
     color: #FFEFBA;
 
 }
+
+
+.mapboxgl-ctrl-logo, .mapboxgl-ctrl-compass{
+    display: none !important; 
+}

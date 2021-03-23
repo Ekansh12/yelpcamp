@@ -1,17 +1,10 @@
 const express = require("express"),
       router = express.Router(),
-      user = require("../../model/user.js"),
-      asyncWrapper = require("../../errorHandler/asyncWrapper.js"),
+      user = require("../model/user.js"),
+      asyncWrapper = require("../errorHandler/asyncWrapper.js"),
       passport= require("passport")
 
-
-const isLoggedIn= (req, res, next)=>{
-    if(!req.isAuthenticated()){
-        req.flash("error","You must Sign In first!!");
-        res.redirect("/signUp");
-    }
-    next();
-}
+const { isLoggedIn}= require("../middleware.js");
 
 router.route("/signUp")
     .get( (req, res) => {
@@ -19,7 +12,7 @@ router.route("/signUp")
         const redirectTo=req.session.returnTo || "/campgrounds";
         return res.redirect(redirectTo);
     }
-    res.render("signUp.ejs");
+    res.render("user/signUp.ejs");
 })
 
     .post( asyncWrapper(async (req, res, next) => {
@@ -47,7 +40,7 @@ router.route("/login")
         const redirectTo=req.session.returnTo || "/campgrounds";
         return res.redirect(redirectTo);
     }
-    res.render("login.ejs");
+    res.render("user/login.ejs");
 })
 
     .post( passport.authenticate("local",{failureFlash:1 ,failureRedirect: "/login"}) ,asyncWrapper(async (req, res, next) => {
@@ -64,13 +57,11 @@ router.get("/logout",isLoggedIn, (req,res, next)=>{
 router.get("/profile/:id",isLoggedIn, asyncWrapper( async(req,res, next)=>{
     const {id}= req.params;
     const foundUser= await user.findById(id);
-    res.render("profile.ejs",{foundUser});
+    res.render("user/profile.ejs",{foundUser});
 }))
 
 router.get("/about", (req,res)=>{
     res.render("about.ejs");
 })
-
-
 
 module.exports = router;
