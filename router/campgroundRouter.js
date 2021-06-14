@@ -7,24 +7,33 @@ const asyncWrapper=require("../errorHandler/asyncWrapper.js");
 const { isLoggedIn, isCampOwner, isReviewOwner, isFirstReview}= require("../middleware.js");
 
 router.get("/",asyncWrapper(async (req, res, next)=>{
-    let campgrounds;
-    if(req.query.sortby=="priceLow"){
+    let campgrounds=[];
+    const term=req.query
+    
+    if(term.search){
+        campgrounds=await campground.find({});
+        campgrounds=campgrounds.filter(camp =>{
+            if(term.search==='') return 1;
+            return camp.name.toLowerCase().includes(term.search);
+        })
+    }
+    else if(term.sortby=="priceLow"){
         campgrounds=await campground.find({})
         .sort({price: 1, avgRating: -1, totalReviews: -1, createdAt: -1})
     }
-    else if(req.query.sortby=="priceHigh"){
+    else if(term.sortby=="priceHigh"){
         campgrounds=await campground.find({})
         .sort({price: -1, avgRating: -1, totalReviews: -1, createdAt: -1})
     }
-    else if(req.query.sortby=="highRated"){
+    else if(term.sortby=="highRated"){
         campgrounds=await campground.find({})
         .sort({avgRating: -1, totalReviews: -1, price: 1, createdAt: -1})
     }
-    else if(req.query.sortby=="mostRev"){
+    else if(term.sortby=="mostRev"){
         campgrounds=await campground.find({})
         .sort({totalReviews: -1, avgRating: -1, price: 1, createdAt: -1})
     }
-    else if(req.query.sortby=="newAdded"){
+    else if(term.sortby=="newAdded"){
         campgrounds=await campground.find({})
         .sort({createdAt: -1})
     }
@@ -58,7 +67,7 @@ router.get("/:id", asyncWrapper(async (req, res, next)=>{
     }).populate("owner");
     if(!foundCampground){
         req.flash("error","Campground not found");
-        res.redirect("/campgrounds");
+        return res.redirect("/campgrounds");
     }
     res.render("campground/show.ejs",{foundCampground});
 }))

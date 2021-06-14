@@ -1,11 +1,13 @@
 # YelpCamp
 YelpCamp is a website where users can view, create and review campgrounds. In order to review or create a campground, you must have an account. This project was part of Colt Steele's web dev course on udemy.
 
-This project was created using Node.js, Express, MongoDB and Bootstrap.
+This project was created using Node.js, Express.js, MongoDB, Bootstrap, EJS, Flash.
 
 Passport was used to handle authentication.
 
 Mapbox was used to locate a campground.
+
+Click [here](https://yelpcamp-ekansh.herokuapp.com/) to see website.
 
 ## Features
 * Users can create and remove campgrounds(which they own).
@@ -21,6 +23,8 @@ Mapbox was used to locate a campground.
 * Added map feature to view location of a campground.
 
 * Sort campgrounds on basis of price, date and reviews.
+
+* Search campgrounds by name.
 
 ## Install
 

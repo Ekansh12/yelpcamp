@@ -1,13 +1,23 @@
 <%- layout("layouts/boilerplate.ejs") %>
 <link rel="stylesheet" href="/css/star-growRotate.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <div id="img-div" class="d-none d-md-block text-center text-white p-5">
     <p id="big-display" class="pt-5 mb-0">Welcome to YelpCamp!</p>
     <p class="fs-5 mt-0">View campgrounds from all over the world</p>
 </div>
 
-<nav class="navbar navbar-expand-sm navbar-light bg-light">
+<nav class="navbar navbar-expand-sm navbar-light bg-light py-3 py-md-2">
     <div class="container">
+        <ul class="navbar-nav">
+            <form action="/campgrounds" method="GET">
+                <div class="input-group">
+                    <input class="form-control fst-italic" type="text" name="search" placeholder="Search.." autocomplete="off">
+                    <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+                </div>
+            </form>
+        </ul>
+
         <ul class="navbar-nav">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle pb-0" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -31,7 +41,6 @@
                 </div>
             </li>
         </ul>
-        
         
     </div>
   </nav>

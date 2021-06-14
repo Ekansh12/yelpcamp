@@ -26,8 +26,7 @@ router.route("/signUp")
     }
     catch(e){
         req.flash("error",e.message);
-        res.redirect("/signUp");
-        return;
+        return res.redirect("/signUp");
     }
     req.flash("success","Welcome!");
     const redirectTo=req.session.returnTo || "/campgrounds";
